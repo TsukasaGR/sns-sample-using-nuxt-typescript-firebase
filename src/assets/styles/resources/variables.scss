@@ -1,0 +1,19 @@
+$page-font: Lato, Noto Sans Japanese, Hiragino Kaku Gothic ProN, 'Yu Gothic',
+  '游ゴシック', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', YuGothic,
+  YuGothicM, sans-serif;
+$primary-color: #3cba6c;
+$primary-background: linear-gradient(
+  30deg,
+  rgb(61, 212, 149) 0%,
+  rgb(130, 207, 23) 100%
+);
+$border-color: #cccbca;
+$primary-heavy-color: #242424;
+$primary-light-color: #707070;
+$background-light-color: #f8f8f8;
+$background-primary-color: #fff;
+// breakpoint
+$screen-sm: 767px;
+$screen-md: 768px;
+$screen-lg: 1000px;
+$screen-xl: 1200px;

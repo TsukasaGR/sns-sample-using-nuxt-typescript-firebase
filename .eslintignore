@@ -1,0 +1,6 @@
+.gitignore
+/node_modules
+/functions/lib
+/functions/cert
+/functions/node_modules
+/src/static/sw.js

@@ -1,0 +1,175 @@
+@import 'bulma-badge/dist/css/bulma-badge.min.css';
+
+html {
+  font-family: $page-font !important;
+  font-size: 16px;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  body {
+    overflow-y: auto;
+  }
+
+  body,
+  input,
+  textarea,
+  select,
+  button {
+    font-family: $page-font !important;
+  }
+
+  .only-sp {
+    display: inherit;
+
+    @include breakpoint() {
+      display: none !important;
+    }
+  }
+
+  .only-pc {
+    display: inherit;
+
+    @include breakpoint(sm) {
+      display: none !important;
+    }
+  }
+
+  .page-enter-active,
+  .page-leave-active {
+    transition: opacity 0.5s;
+  }
+
+  .page-enter,
+  .page-leave-active {
+    opacity: 0;
+  }
+
+  .bounce-enter-active {
+    animation: bounce-in 0.8s;
+  }
+
+  .bounce-leave-active {
+    animation: bounce-out 0.5s;
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+
+    50% {
+      transform: scale(1.5);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes bounce-out {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.5);
+    }
+
+    100% {
+      transform: scale(0);
+    }
+  }
+
+  .slide-left-enter,
+  .slide-right-leave-active {
+    opacity: 0;
+    transform: translate(30px, 0);
+  }
+
+  .slide-left-leave-active,
+  .slide-right-enter {
+    opacity: 0;
+    transform: translate(-30px, 0);
+  }
+}
+
+img {
+  object-fit: contain;
+}
+
+.show {
+  display: block !important;
+}
+
+.none {
+  display: none !important;
+}
+
+textarea {
+  resize: none;
+}
+
+a {
+  color: #989797 !important;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+li,
+div {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+button.is-primary {
+  background-color: #00cc10 !important;
+}
+
+.tabs {
+  font-size: 0.8rem !important;
+
+  li.is-active a {
+    border-bottom-color: #00cc10 !important;
+  }
+}
+
+textarea.body {
+  &:focus {
+    outline: none;
+  }
+
+  font-size: 1rem;
+}
+
+.nuxt-link-active {
+  font-weight: bold;
+  color: #4a4a4a !important;
+}
+
+.message {
+  .message-body {
+    padding: 1.25em 0.5em;
+  }
+}
+
+.tab-content {
+  padding: 0 !important;
+}
+
+.back {
+  cursor: pointer;
+  display: flex;
+
+  .icon {
+    .mdi {
+      &:before {
+        font-size: 32px !important;
+      }
+    }
+  }
+}

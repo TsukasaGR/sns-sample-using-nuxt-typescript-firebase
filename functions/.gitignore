@@ -1,0 +1,17 @@
+## Compiled JavaScript files
+**/*.js
+**/*.js.map
+lib/cert/*
+
+# Typescript v1 declaration files
+typings/
+
+node_modules/
+
+.env*
+
+tests/*.json
+
+cert/*
+!.env.example
+!.gitkeep

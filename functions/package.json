@@ -1,0 +1,48 @@
+{
+  "name": "nuxt-firebase-gcp-sample-functions",
+  "engines": {
+    "node": "10"
+  },
+  "scripts": {
+    "build": "tsc",
+    "firebase:login": "firebase login",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase use staging && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy:staging": "firebase use staging && firebase deploy --only functions",
+    "deploy:staging:api": "firebase use staging && firebase deploy --only functions:api",
+    "deploy:staging:trigger": "firebase use staging && firebase deploy --only functions:trigger",
+    "deploy:staging:pubsub": "firebase use staging && firebase deploy --only functions:pubsub",
+    "deploy:production": "firebase use production && firebase deploy --only functions",
+    "deploy:production:api": "firebase use production && firebase deploy --only functions:api",
+    "deploy:production:trigger": "firebase use production && firebase deploy --only functions:trigger",
+    "deploy:production:pubsub": "firebase use production && firebase deploy --only functions:pubsub",
+    "logs": "firebase functions:log"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "@firebase/firestore-types": "^1.6.0",
+    "@google-cloud/bigquery": "^4.2.1",
+    "@google-cloud/firestore": "^2.4.0",
+    "@types/cors": "^2.8.6",
+    "@types/request": "^2.48.3",
+    "@types/request-promise": "^4.1.44",
+    "atob": "^2.1.2",
+    "cors": "^2.8.5",
+    "dayjs": "^1.8.16",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "firebase": "^7.1.0",
+    "firebase-admin": "^8.7.0",
+    "firebase-functions": "^3.2.0",
+    "firebase-functions-test": "^0.1.6",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
+  "devDependencies": {
+    "firebase-tools": "^7.5.0",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
+  },
+  "version": "0.0.0"
+}

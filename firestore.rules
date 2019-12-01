@@ -1,0 +1,63 @@
+// [READ] Data that exists on the Firestore document
+function existingData() {
+  return resource.data;
+}
+
+// [WRITE] Data that is sent to a Firestore document
+function incomingData() {
+  return request.resource.data;
+}
+
+function isUser() {
+  return
+    incomingData().createdUser == incomingData().userId ||
+    incomingData().createdUser == incomingData().objectID
+}
+
+function _exists_(database, collectionName, id) {
+  return exists(/databases/$(database)/documents/$(collectionName)/$(id));
+}
+
+function _get_(database, collectionName, id) {
+  return get(/databases/$(database)/documents/$(collectionName)/$(id)).data;
+}
+
+function getObjectID(database, collectionName, id) {
+  return _exists_(database, collectionName, id) && _get_(database, collectionName, id).objectID;
+}
+
+function getUserId(database, collectionName, id) {
+  return _exists_(database, collectionName, id) && _get_(database, collectionName, id).userId;
+}
+
+function getCreatedUserId(database, collectionName, id) {
+  return _exists_(database, collectionName, id) && _get_(database, collectionName, id).createdUser;
+}
+
+function getRole(database, id) {
+  return _get_(database, collectionName, id).role;
+}
+
+function isAdmin(database, userId) {
+  return getRole(database, userId) == "admin"
+}
+
+function isAuthentication(database, userId) {
+  return isAdmin(database, userId) || isUser()
+}
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, delete: if true;
+      allow create, update: if true;
+        //isAuthentication(database, getObjectID(database, 'users', userId));
+    }
+    match /comments/{commentId} {
+      allow read, delete, create, update: if true;
+    }
+    match /replies/{replyId} {
+      allow read, delete, create, update: if true;
+    }
+  }
+}

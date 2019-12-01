@@ -1,0 +1,22 @@
+steps:
+  - name: 'alpine'
+    args: ['echo', '${_ENVIRONMENT}']
+  - name: 'gcr.io/cloud-builders/yarn'
+    args: ['install']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['config', 'set', 'project', '${_PROJECT_ID}']
+  - name: 'gcr.io/cloud-builders/yarn'
+    args: ['deploy:gcp:${_ENVIROMENT}']
+    env:
+      - 'apiKey=${_API_KEY}'
+      - 'authDomain=${_AUTH_DOMAIN}'
+      - 'databaseURL=${_DATABASE_URL}'
+      - 'projectId=${_PROJECT_ID}'
+      - 'storageBucket=${_STORAGE_BUCKET}'
+      - 'messagingSenderId=${_MESSAGING_SENDER_ID}'
+      - 'apiBaseUrl=${_API_BASE_URL}'
+      - 'isMaintenance=${_IS_MAINTENANCE}'
+      - 'rollbarAccessToken=${_ROLLBAR_ACCESS_TOKEN}'
+      - 'trackingId=${_TRACKING_ID}'
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy', '-q']
