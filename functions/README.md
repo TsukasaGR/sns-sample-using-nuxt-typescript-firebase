@@ -21,4 +21,4 @@ URL は `http://localhost:5000/プロジェクト名/リージョン名/goalOnRe
 
 ## デプロイ参考情報
 
-functions を個別にデプロイする際は `functions:goalOnRequest` のように指定する
+functions を個別にデプロイする際は `functions:api` `functions:api-users` のように指定する

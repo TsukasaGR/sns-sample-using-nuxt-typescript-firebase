@@ -15,7 +15,7 @@
             😱エラーが発生しました😱
           </p>
           <p>
-            🙏Habitttチームがエラーを確認致しますので、今しばらくお待ち下さい🙏
+            🙏エラーを確認致しますので、今しばらくお待ち下さい🙏
           </p>
         </template>
       </div>
@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import firebase from '~/plugins/firebase'
+import firebase from '~/modules/firebase'
 
 @Component
 export default class LayoutsError extends Vue {
@@ -44,7 +44,7 @@ export default class LayoutsError extends Vue {
     if (this.error.statusCode && this.error.statusCode === 404)
       this.$rollbar.warning(message, this.error)
     else this.$rollbar.error(message, this.error)
-    this.$store.commit('pageLoading/updateState', false)
+    this.$store.commit('loading/updateState', false)
   }
 
   goHome(): void {

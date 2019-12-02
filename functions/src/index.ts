@@ -5,25 +5,21 @@ type FunctionGroupDetail = {
 type FunctionGroup = {
   [key: string]: FunctionGroupDetail
   api: FunctionGroupDetail
-  trigger: FunctionGroupDetail
-  pubsub: FunctionGroupDetail
+  // trigger: FunctionGroupDetail
+  // pubsub: FunctionGroupDetail
 }
 
 const funcs: FunctionGroup = {
   api: {
-    userOnRequest: require('./https/users'),
-    goalOnRequest: require('./https/goals'),
-    recordOnRequest: require('./https/records'),
-    retrospectiveOnRequest: require('./https/retrospectives'),
-    teamOnRequest: require('./https/teams'),
-    alertOnRequest: require('./https/alerts'),
+    comments: require('./https/comments'),
+    users: require('./https/users'),
   },
-  trigger: {
-    goalOnWrite: require('./triggers/firestore/goals/onWrite'),
-  },
-  pubsub: {
-    noticeDeploy: require('./pubsubs/noticeDeploy'),
-  },
+  // trigger: {
+  //   goalOnWrite: require('./triggers/firestore/goals/onWrite'),
+  // },
+  // pubsub: {
+  //   noticeDeploy: require('./pubsubs/noticeDeploy'),
+  // },
 }
 
 const loadFunctions = (funcsObj: FunctionGroup) => {
@@ -32,11 +28,12 @@ const loadFunctions = (funcsObj: FunctionGroup) => {
     if (process.env.FUNCTION_NAME === group) {
       exports[group] = funcsObj[group]
     }
-
     // function単位の(or全)デプロイ
-    for (const name in funcsObj) {
-      if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === name) {
-        exports[name] = funcsObj[name]
+    else {
+      for (const name in funcsObj) {
+        if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === name) {
+          exports[name] = funcsObj[name]
+        }
       }
     }
   }

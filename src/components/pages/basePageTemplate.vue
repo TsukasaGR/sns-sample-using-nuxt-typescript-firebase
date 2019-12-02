@@ -25,6 +25,9 @@
         <p>content</p>
       </slot>
     </div>
+    <div class="action-base-container">
+      <slot name="action" />
+    </div>
   </div>
 </template>
 
@@ -35,10 +38,6 @@ import { NavType } from '~/types/applicationTypes'
 @Component
 export default class LayoutsNavigationContainersSpHeaderNavsBase extends Vue {
   @Prop({ type: String, default: 'default' }) navType!: NavType
-
-  created(): void {
-    if (process.env.isMaintenance) this.$router.push('/maintenance')
-  }
 
   get isTypeDefault(): boolean {
     return this.navType === 'default'
@@ -56,7 +55,7 @@ export default class LayoutsNavigationContainersSpHeaderNavsBase extends Vue {
     position: fixed;
     height: 56px;
     width: 100%;
-    max-width: 500px;
+    max-width: $window-max-width;
     top: 0;
     background-color: $background-primary-color;
     border-bottom: 1px solid $border-color;
@@ -94,9 +93,21 @@ export default class LayoutsNavigationContainersSpHeaderNavsBase extends Vue {
   }
 
   .main-content-container {
-    margin-top: 53px;
-    margin-bottom: calc(65px + env(safe-area-inset-bottom));
-    min-height: calc(100vh - 150px);
+    margin-top: $header-nav-height;
+    margin-bottom: $footer-nav-height;
+    min-height: $min-page-height;
+    padding: 1rem;
+  }
+
+  .action-base-container {
+    z-index: 3;
+    position: absolute;
+    width: 100%;
+    max-width: $window-max-width;
+    bottom: $action-container-bottom;
+    display: flex;
+    justify-content: flex-end;
+    padding: 2rem;
   }
 }
 </style>

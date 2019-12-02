@@ -22,7 +22,7 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import BasePage from '~/mixins/basePage'
 import BasePageTemplate from '~/components/pages/basePageTemplate.vue'
-import FirebaseUi from '~/components/organisms/containerComponents/login/FirebaseUi.vue'
+import FirebaseUi from '~/components/containers/login/FirebaseUi.vue'
 
 @Component({
   components: {

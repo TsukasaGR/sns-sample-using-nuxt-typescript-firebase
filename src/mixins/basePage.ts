@@ -1,7 +1,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import * as types from '~/types/domainTypes'
 import { timestampOfCurrentTime } from '~/modules/dayjs'
-import { storeOrUpdateUser } from '~/apis/users'
+import { updateUser } from '~/apis/users'
 
 const NOT_AUTH_PATH_LIST = ['/', '/login']
 
@@ -11,12 +11,12 @@ export default class extends Vue {
   notAuthPathList: string[] = NOT_AUTH_PATH_LIST
 
   startPageMounted(): void {
-    this.$store.commit('pageLoading/updateState', true)
+    this.$store.commit('loading/updateState', true)
   }
 
   endPageMounted(): void {
     this.isInitialized = true
-    this.$store.commit('pageLoading/updateState', false)
+    this.$store.commit('loading/updateState', false)
   }
 
   async loginCheck(): Promise<void> {
@@ -31,7 +31,6 @@ export default class extends Vue {
           objectID: this.$store.state.auth.uid,
           accountName: this.$store.state.auth.displayName,
           displayName: this.$store.state.auth.displayName,
-          email: this.$store.state.auth.email,
           icon:
             this.$store.state.auth.photoURL &&
             this.$store.state.auth.photoURL !== 'null'
@@ -39,11 +38,9 @@ export default class extends Vue {
               : null,
           description: '',
           createdAt: timestampOfCurrentTime(),
-          role: '',
           createdUser: this.$store.state.auth.uid,
-          tags: [],
         }
-        const user = await storeOrUpdateUser(userDraft)
+        const user = await updateUser(userDraft)
         if (!user) {
           this.$rollbar.error('ユーザー登録に失敗しました', user)
           this.$buefy.toast.open('予期せぬエラーが発生しました😭😭😭')
@@ -58,11 +55,11 @@ export default class extends Vue {
   }
 
   get isShow(): boolean {
-    return this.isInitialized && !this.$store.state.pageLoading.isLoad
+    return this.isInitialized && !this.$store.state.loading.isLoad
   }
 
   failedUpdate() {
     this.$buefy.toast.open('更新出来ませんでした')
-    this.$store.commit('pageLoading/updateState', false)
+    this.$store.commit('loading/updateState', false)
   }
 }

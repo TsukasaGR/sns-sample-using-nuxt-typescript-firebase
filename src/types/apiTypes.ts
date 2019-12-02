@@ -1,26 +1,17 @@
 import * as types from '~/types/domainTypes'
 
-export type StoreOrUpdateGoalSuccess = {
-  goal: types.Goal
+export type StoreOrUpdateCommentSuccess = {
+  comment: types.Comment
 }
-export type StoreOrUpdateRecordSuccess = {
-  record: types.Record
+export type StoreOrUpdateReplySuccess = {
+  reply: types.Reply
 }
-export type DeleteRecordSuccess = {
-  message: string
-}
-export type StoreOrUpdateRetrospectiveSuccess = {
-  retrospective: types.Retrospective
-}
-export type DeleteRetrospectiveSuccess = {
-  message: string
+export type StoreOrUpdateNoticeSuccess = {
+  notice: types.Notice
 }
 export type StoreOrUpdateUserSuccess = {
   user: types.User
 }
-export type StoreOrUpdateTeamSuccess = {
-  team: types.Team
-}
-export type DeleteTeamSuccess = {
+export type DeleteSuccess = {
   message: string
 }

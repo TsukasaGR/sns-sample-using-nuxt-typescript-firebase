@@ -1,6 +1,6 @@
-export const STORE_OR_UPDATE_GOAL: string = 'api-goalOnRequest'
-export const STORE_OR_UPDATE_RECORD: string = 'api-recordOnRequest'
-export const STORE_OR_UPDATE_RETROSPECTIVE: string =
-  'api-retrospectiveOnRequest'
-export const STORE_OR_UPDATE_USER: string = 'api-userOnRequest'
-export const STORE_OR_UPDATE_TEAM: string = 'api-teamOnRequest'
+import { API_BASE_URL } from '~/constants/env'
+
+export const API_COMMENTS_URL: string = `${API_BASE_URL}api-comments`
+export const API_REPLIES_URL: string = `${API_BASE_URL}api-replies`
+export const API_NOTICES_URL: string = `${API_BASE_URL}api-notices`
+export const API_USERS_URL: string = `${API_BASE_URL}api-users`

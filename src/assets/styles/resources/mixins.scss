@@ -1,16 +1,12 @@
 @mixin breakpoint($bpName: 'md') {
   @if ($bpName == 'sm') {
-    // TODO: 一時的にスマホレイアウトのみにしている
-    // @media screen and (max-width: screen-sm) {
-    @media screen and (max-width: 3000px) {
+    @media screen and (max-width: screen-sm) {
       @content;
     }
   }
 
-  // TODO: 一時的にスマホレイアウトのみにしている
-  // @if (name == 'md') {
   @if ($bpName == 'md') {
-    @media screen and (min-width: 3000px) {
+    @media screen and (min-width: $screen-md) {
       @content;
     }
   }

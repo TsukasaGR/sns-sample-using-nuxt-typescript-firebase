@@ -2,9 +2,10 @@ import { Store } from 'vuex'
 import axios from 'axios'
 import * as token from '~/modules/firebase/token'
 import rollbar from '~/modules/rollbar'
+import * as env from '~/constants/env'
 
 export default ({ store }: { store: Store<any> }) => {
-  const baseURL: string = String(process.env.apiBaseUrl)
+  const baseURL: string = String(env.API_BASE_URL)
   axios.defaults.baseURL = baseURL
 
   axios.interceptors.request.use(async config => {

@@ -1,6 +1,6 @@
 import { Store } from 'vuex'
 import { AuthState } from '~/store/auth'
-import firebase from '~/plugins/firebase'
+import firebase from '~/modules/firebase'
 
 export default async ({ store }: { store: Store<any> }) => {
   const user = await auth()
@@ -16,7 +16,6 @@ export default async ({ store }: { store: Store<any> }) => {
     }
     await store.commit('auth/setAuth', auth)
   }
-  await store.commit('initialize/done')
 }
 
 /**

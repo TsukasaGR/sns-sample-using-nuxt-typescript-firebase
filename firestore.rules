@@ -59,5 +59,8 @@ service cloud.firestore {
     match /replies/{replyId} {
       allow read, delete, create, update: if true;
     }
+    match /notices/{replyId} {
+      allow read, delete, create, update: if true;
+    }
   }
 }

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Nuxt.js, firebase, GCPのサンプル",
   "author": "TsukasaGR",
+  "license": "MIT",
   "scripts": {
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",

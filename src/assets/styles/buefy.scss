@@ -27,7 +27,7 @@ $blue: hsl(217, 71%, 53%) !default;
 $purple: hsl(271, 100%, 71%) !default;
 $red: hsl(348, 100%, 61%) !default;
 
-$primary: #70bd9f !default;
+$primary: $primary-color !default;
 $info: $cyan !default;
 $success: $green !default;
 $warning: $yellow !default;

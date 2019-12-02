@@ -230,7 +230,6 @@ const nuxtConfig: NuxtConfiguration = {
     '~/plugins/firebase',
     '~/plugins/auth',
     '~/plugins/axios',
-    { src: '~/plugins/infiniteScroll', ssr: false },
     '~/plugins/rollbar',
     { src: '~plugins/ga', mode: 'client' },
   ],

@@ -1,3 +1,5 @@
+import * as env from '~/constants/env'
+
 /* eslint-disable */
 
 // TODO: ts-ignoreとanyを使わずに書く
@@ -5,7 +7,7 @@ export default ({ app }) => {
   /*
    ** クライアントサイドかつプロダクションモードでのみ実行
    */
-  if (process.env.NODE_ENV !== 'production')
+  if (env.NODE_ENV !== 'production')
     return /*
      ** Google アナリティクスのスクリプトをインクルード
      */

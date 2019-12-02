@@ -1,11 +1,12 @@
 import Rollbar from 'rollbar'
+import * as env from '~/constants/env'
 
 export const rollbarConfig = {
-  accessToken: process.env.rollbarAccessToken,
+  accessToken: env.ROLLBAR_ACCESS_TOKEN,
   captureUncaught: true,
   captureUnhandledRejections: true,
   enabled: true,
-  environment: process.env.NODE_ENV,
+  environment: env.NODE_ENV,
   payload: {
     client: {
       javascript: {

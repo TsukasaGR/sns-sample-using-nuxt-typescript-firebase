@@ -11,55 +11,8 @@
     <template v-slot:header-right />
     <template v-slot:content>
       <section>
-        <div v-if="user">
-          <div class="top-container">
-            <Profile class="profile" :user="user" :teams="teams" />
-            <div class="plof-container">
-              <div class="plofbutton">
-                <AtomsButton
-                  v-if="isOwn"
-                  class="only-sp"
-                  value="プロフィールを編集する"
-                  color="is-sub"
-                  @click="editProfile(user.objectID)"
-                />
-              </div>
-            </div>
-            <template v-if="isAdmin">
-              <div class="plof-container">
-                <div class="plofbutton">
-                  <AtomsButton
-                    class="only-sp"
-                    value="チームを設定する"
-                    color="is-sub"
-                    @click="$router.push('/teams/edit')"
-                  />
-                </div>
-              </div>
-              <div class="plof-container">
-                <div class="plofbutton">
-                  <AtomsButton
-                    class="only-sp"
-                    value="Admin"
-                    color="is-sub"
-                    @click="$router.push('/admin')"
-                  />
-                </div>
-              </div>
-            </template>
-          </div>
-          <TabList
-            :goals="goals"
-            :timeline="timeline"
-            :records="records"
-            :retrospectives="retrospectives"
-            :schedule-dates="scheduleDates"
-          />
-        </div>
-        <div v-if="isOwn" class="logout-container">
-          <button class="button" @click="logout">
-            ログアウト
-          </button>
+        <div>
+          user
         </div>
       </section>
     </template>
@@ -72,87 +25,21 @@ import BasePage from '~/mixins/basePage'
 import BasePageTemplate from '~/components/pages/basePageTemplate.vue'
 import * as types from '~/types/domainTypes'
 import * as consts from '~/constants/domainInits'
-import { timestampOfCurrentTime } from '~/modules/dayjs'
 import { user } from '~/modules/firebase/firestore/users'
-import { storeOrUpdateUser } from '~/apis/users'
-import Profile from '~/components/molecules/domains/users/profile.vue'
-import AtomsButton from '~/components/atoms/Button.vue'
-import ListProfile from '~/components/molecules/domains/users/listProfile.vue'
-import firebase from '~/plugins/firebase'
-import GoalItem from '~/components/molecules/domains/timeline/goal.vue'
-import RecordItem from '~/components/molecules/domains/timeline/record.vue'
-import RetrospectiveItem from '~/components/molecules/domains/timeline/retrospective.vue'
-import { goalsOfUser } from '~/modules/firebase/firestore/goals'
-import { recordsOfUser } from '~/modules/firebase/firestore/records'
-import { retrospectivesOfUser } from '~/modules/firebase/firestore/retrospectives'
-import { isDraft, isPublished, isArchived } from '~/modules/domains/goal'
-import TabList from '~/components/molecules/domains/users/tabList.vue'
-import { timelineOfUser } from '~/modules/domains/timeline'
-import { scheduleDatesOfUser } from '~/modules/firebase/firestore/scheduleDates'
-import { teamsOfUser } from '~/modules/domains/teams/index'
-import { isAdmin } from '~/modules/domains/users/index'
+import firebase from '~/modules/firebase'
 
 @Component({
   components: {
     BasePageTemplate,
-    Profile,
-    AtomsButton,
-    ListProfile,
-    GoalItem,
-    RecordItem,
-    RetrospectiveItem,
-    TabList,
   },
 })
 export default class PagesUsersIdProfile extends Mixins(BasePage) {
   activeTab: number = 0
   user: types.User | types.UserDraft = { ...consts.USER_INIT_VALUE }
 
-  goals: types.Goal[] = []
-  records: types.Record[] = []
-  retrospectives: types.Retrospective[] = []
-  timeline: types.Timeline[] = []
-  scheduleDates: types.ScheduleDate[] = []
-  teams: types.Team[] = []
-
-  tab: types.GoalStatus = 'published'
-
-  async getGoals() {
-    if (!this.user.objectID) return
-    this.goals = await goalsOfUser(this.user.objectID)
-  }
-  async getRecords() {
-    if (!this.user.objectID) return
-    this.records = await recordsOfUser(this.user.objectID)
-  }
-  async getRetrospectives() {
-    if (!this.user.objectID) return
-    this.retrospectives = await retrospectivesOfUser(this.user.objectID)
-  }
-  async getTimeline() {
-    if (!this.user.objectID) return
-    this.timeline = await timelineOfUser(this.user.objectID)
-  }
-  async getScheduleDates() {
-    if (!this.user.objectID) return
-    this.scheduleDates = await scheduleDatesOfUser(this.user.objectID)
-  }
-  async getTeams() {
-    if (!this.user.objectID) return
-    this.teams = await teamsOfUser(this.user.objectID)
-  }
-
   async mounted() {
     this.startPageMounted()
     await this.getUser()
-    await Promise.all([
-      this.getGoals(),
-      this.getRecords(),
-      this.getRetrospectives(),
-      this.getTimeline(),
-      this.getScheduleDates(),
-      this.getTeams(),
-    ])
     this.endPageMounted()
   }
 
@@ -162,38 +49,11 @@ export default class PagesUsersIdProfile extends Mixins(BasePage) {
   get isOwn(): boolean {
     return this.auth.uid === this.user.objectID
   }
-  get isAdmin(): boolean {
-    return this.user && isAdmin(this.user as types.User)
-  }
-  // TODO: 公開済みより公開中の意味合いが強いのでshowingとかのほうが良いかも
-  get publishedGoals() {
-    return this.goals.filter((goal: types.Goal) => isPublished(goal))
-  }
-  get draftGoals() {
-    return this.goals.filter((goal: types.Goal) => isDraft(goal))
-  }
-  get archivedGoals() {
-    return this.goals.filter((goal: types.Goal) => isArchived(goal))
-  }
 
+  // TODO: 公開済みより公開中の意味合いが強いのでshowingとかのほうが良いかも
   async getUser(): Promise<void> {
     this.user = await user(this.$route.params.id)
     if (!this.user || !this.user.objectID) this.logout()
-  }
-
-  async storeUser(): Promise<void> {
-    const user: types.User = {
-      objectID: this.auth.uid,
-      accountName: this.auth.displayName,
-      displayName: this.auth.displayName,
-      email: this.auth.email,
-      icon: this.auth.photoURL,
-      description: '',
-      createdAt: timestampOfCurrentTime(),
-      role: '',
-      createdUser: '',
-    }
-    await storeOrUpdateUser(user)
   }
 
   editProfile(id: number) {

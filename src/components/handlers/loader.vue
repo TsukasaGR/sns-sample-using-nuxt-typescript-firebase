@@ -12,7 +12,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class ComponentsHandlersLoader extends Vue {
+export default class ComponentsHandlersPageLoader extends Vue {
   get isLoad(): boolean {
     return this.$store.state.loading.isLoad
   }
@@ -23,11 +23,11 @@ export default class ComponentsHandlersLoader extends Vue {
 .loading-page {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100vw;
-  max-width: 500px;
   height: 100vh;
-  z-index: 10001;
-  background-color: rgba(144, 232, 133, 0.8);
+  z-index: 5;
+  background-color: rgba(255, 255, 255, 0.8);
 
   .spinner {
     margin: 100px auto 0;
@@ -43,7 +43,7 @@ export default class ComponentsHandlersLoader extends Vue {
     > div {
       width: 18px;
       height: 18px;
-      background-color: #fff;
+      background-color: gray;
       border-radius: 100%;
       display: inline-block;
       -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;

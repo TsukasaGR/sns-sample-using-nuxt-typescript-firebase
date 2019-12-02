@@ -12,6 +12,13 @@ $primary-heavy-color: #242424;
 $primary-light-color: #707070;
 $background-light-color: #f8f8f8;
 $background-primary-color: #fff;
+
+$window-max-width: 500px;
+$header-nav-height: 56px;
+$footer-nav-height: calc(56px + env(safe-area-inset-bottom));
+$action-container-bottom: calc(0px + 56px + env(safe-area-inset-bottom));
+$min-page-height: calc(100vh - 56px - 56px + env(safe-area-inset-bottom));
+
 // breakpoint
 $screen-sm: 767px;
 $screen-md: 768px;

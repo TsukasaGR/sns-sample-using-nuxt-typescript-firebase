@@ -1,4 +1,4 @@
-import firebase from '~/plugins/firebase'
+import firebase from '~/modules/firebase'
 const storage = firebase.storage()
 
 export function uploadStorage(blob): Promise<any> {
@@ -16,7 +16,6 @@ export function uploadStorage(blob): Promise<any> {
     uploadTask.on(
       firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
       (snapshot: any) => {
-        // TODO: プログレスバー作るときに使えそう、作らないならいらない
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         console.log('Upload is ' + progress + '% done')

@@ -3,7 +3,7 @@
     <div class="logo-container">
       <img class="logo-image" :src="logo" />
       <p class="sub-title">
-        「チーム」×「習慣」で目標をアップデートする
+        「Nuxt.js(ts)」×「firebsae」×「GCP」のサンプル
       </p>
     </div>
   </section>

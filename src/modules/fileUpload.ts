@@ -1,17 +1,8 @@
-import * as types from '~/types/domainTypes'
 import { toBlobFromBase64 } from '~/modules/imageOperation'
 import { uploadStorage } from '~/modules/firebase/storage'
 import rollbar from '~/modules/rollbar'
 
-export async function uploadImage<
-  T extends
-    | types.Goal
-    | types.GoalDraft
-    | types.Record
-    | types.RecordDraft
-    | types.Retrospective
-    | types.RetrospectiveDraft
->(
+export async function uploadImage<T>(
   type: 'goal' | 'record' | 'retrospective',
   object: T,
   uploadFiles: File[]

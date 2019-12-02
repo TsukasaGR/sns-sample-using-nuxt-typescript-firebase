@@ -1,4 +1,4 @@
-import firebase from '~/plugins/firebase'
+import firebase from '~/modules/firebase'
 
 export function getIdToken(): Promise<string> {
   const auth = firebase.auth()

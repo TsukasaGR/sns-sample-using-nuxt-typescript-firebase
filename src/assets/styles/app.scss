@@ -15,6 +15,8 @@ html {
 
   body {
     overflow-y: auto;
+    max-width: $window-max-width;
+    margin: auto;
   }
 
   body,
@@ -126,18 +128,6 @@ div {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-button.is-primary {
-  background-color: #00cc10 !important;
-}
-
-.tabs {
-  font-size: 0.8rem !important;
-
-  li.is-active a {
-    border-bottom-color: #00cc10 !important;
-  }
-}
-
 textarea.body {
   &:focus {
     outline: none;
@@ -149,27 +139,4 @@ textarea.body {
 .nuxt-link-active {
   font-weight: bold;
   color: #4a4a4a !important;
-}
-
-.message {
-  .message-body {
-    padding: 1.25em 0.5em;
-  }
-}
-
-.tab-content {
-  padding: 0 !important;
-}
-
-.back {
-  cursor: pointer;
-  display: flex;
-
-  .icon {
-    .mdi {
-      &:before {
-        font-size: 32px !important;
-      }
-    }
-  }
 }
