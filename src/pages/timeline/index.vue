@@ -19,33 +19,12 @@
         aria-role="dialog"
         aria-modal
       >
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">
-              コメントする
-            </p>
-          </header>
-          <section class="modal-card-body">
-            <b-field label="コメント" label-position="on-border">
-              <b-input
-                v-model="commentBody"
-                maxlength="140"
-                type="textarea"
-              ></b-input>
-            </b-field>
-          </section>
-          <footer class="modal-card-foot">
-            <button class="button" type="button" @click="toggleModal(false)">
-              Close
-            </button>
-            <button v-if="!canPost" class="button is-primary" disabled>
-              Comment
-            </button>
-            <button v-else class="button is-primary" @click="postComment()">
-              Comment
-            </button>
-          </footer>
-        </div>
+        <CommentModal
+          :body.sync="commentBody"
+          :can-post="canPost"
+          @close-modal="toggleModal(false)"
+          @comment="postComment()"
+        />
       </b-modal>
     </template>
   </base-page-template>
@@ -56,6 +35,7 @@ import { Component, Mixins } from 'vue-property-decorator'
 import BasePage from '~/mixins/basePage'
 import BasePageTemplate from '~/components/pages/basePageTemplate.vue'
 import ActionButton from '~/components/presentations/actionButton.vue'
+import CommentModal from '~/components/presentations/commentModal.vue'
 import { storeComment } from '~/apis/comments'
 import { Auth, CommentDraft } from '~/types/domainTypes'
 import { timestampOfCurrentTime } from '~/modules/dayjs'
@@ -64,6 +44,7 @@ import { timestampOfCurrentTime } from '~/modules/dayjs'
   components: {
     BasePageTemplate,
     ActionButton,
+    CommentModal,
   },
 })
 export default class PagesTimeline extends Mixins(BasePage) {
