@@ -101,7 +101,7 @@ export default class LayoutsNavigationContainersSpHeaderNavsBase extends Vue {
 
   .action-base-container {
     z-index: 3;
-    position: absolute;
+    position: fixed;
     width: 100%;
     max-width: $window-max-width;
     bottom: $action-container-bottom;

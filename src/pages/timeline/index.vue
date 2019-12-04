@@ -7,7 +7,12 @@
     <template v-slot:header-right />
     <template v-slot:content>
       <div class="pages-timeline">
-        timeline
+        <TimelineItem
+          v-for="(comment, index) in filteredComments"
+          :key="index"
+          :comment="comment"
+          class="timeline-item"
+        />
       </div>
     </template>
     <template v-slot:action>
@@ -32,34 +37,53 @@
 
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator'
+import cloneDeep from 'lodash/cloneDeep'
 import BasePage from '~/mixins/basePage'
 import BasePageTemplate from '~/components/pages/basePageTemplate.vue'
 import ActionButton from '~/components/presentations/actionButton.vue'
 import CommentModal from '~/components/presentations/commentModal.vue'
+import TimelineItem from '~/components/presentations/timelineItem.vue'
 import { storeComment } from '~/apis/comments'
-import { Auth, CommentDraft } from '~/types/domainTypes'
+import { Auth, CommentDraft, Comment } from '~/types/domainTypes'
 import { timestampOfCurrentTime } from '~/modules/dayjs'
+import { sortComments } from '~/modules/domains/comments'
 
 @Component({
   components: {
     BasePageTemplate,
     ActionButton,
     CommentModal,
+    TimelineItem,
   },
 })
 export default class PagesTimeline extends Mixins(BasePage) {
   isModalActive = false
   commentBody = ''
+  // comments: Comment[] = []
 
   async mounted(): Promise<void> {
     this.startPageMounted()
     await this.loginCheck()
+    await this.bind()
     this.endPageMounted()
+  }
+
+  async destroyed() {
+    await this.unbind()
   }
 
   initialize(): void {
     this.isModalActive = false
     this.commentBody = ''
+  }
+
+  async bind(): Promise<void> {
+    // this.comments = await allComments('desc')
+    await this.$store.dispatch('domains/timeline/bind')
+  }
+
+  async unbind(): Promise<void> {
+    await this.$store.dispatch('domains/timeline/unbind')
   }
 
   toggleModal(value): void {
@@ -87,11 +111,23 @@ export default class PagesTimeline extends Mixins(BasePage) {
   get canPost(): boolean {
     return this.commentBody !== ''
   }
+
+  get comments(): Comment[] {
+    return this.$store.state.domains.timeline.comments
+  }
+
+  get filteredComments(): Comment[] {
+    return sortComments(cloneDeep(this.comments), 'desc')
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .pages-timeline {
-  margin: 0 auto;
+  .timeline-item {
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
 }
 </style>

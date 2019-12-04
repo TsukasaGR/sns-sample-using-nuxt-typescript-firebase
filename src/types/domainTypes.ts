@@ -31,6 +31,7 @@ export type Auth = {
 }
 
 export type User = DomainTypeBase & {
+  objectID: string
   accountName?: string
   displayName?: string
   icon?: string
@@ -41,6 +42,7 @@ export type UserDraft = Draft<User, 'objectID'>
 
 export type Comment = DomainTypeBase & {
   body: string
+  user?: User
 }
 
 export type CommentDraft = Draft<Comment, 'objectID'>

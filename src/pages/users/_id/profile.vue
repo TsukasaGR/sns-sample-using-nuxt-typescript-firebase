@@ -1,20 +1,16 @@
 <template>
   <base-page-template v-if="isShow">
-    <template v-slot:header-left>
-      <div class="back" @click="$router.go(-1)">
-        <b-icon icon="chevron-left" />
-      </div>
-    </template>
+    <template v-slot:header-left />
     <template v-slot:header-center>
       <p>プロフィール</p>
     </template>
-    <template v-slot:header-right />
+    <template v-slot:header-right>
+      <b-button v-if="isOwn" @click="editProfile()">
+        Edit
+      </b-button>
+    </template>
     <template v-slot:content>
-      <section>
-        <div>
-          user
-        </div>
-      </section>
+      <UserProfile :user="user" />
     </template>
   </base-page-template>
 </template>
@@ -23,6 +19,7 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import BasePage from '~/mixins/basePage'
 import BasePageTemplate from '~/components/pages/basePageTemplate.vue'
+import UserProfile from '~/components/presentations/userProfile.vue'
 import * as types from '~/types/domainTypes'
 import * as consts from '~/constants/domainInits'
 import { user } from '~/modules/firebase/firestore/users'
@@ -31,6 +28,7 @@ import firebase from '~/modules/firebase'
 @Component({
   components: {
     BasePageTemplate,
+    UserProfile,
   },
 })
 export default class PagesUsersIdProfile extends Mixins(BasePage) {
@@ -50,14 +48,13 @@ export default class PagesUsersIdProfile extends Mixins(BasePage) {
     return this.auth.uid === this.user.objectID
   }
 
-  // TODO: 公開済みより公開中の意味合いが強いのでshowingとかのほうが良いかも
   async getUser(): Promise<void> {
     this.user = await user(this.$route.params.id)
     if (!this.user || !this.user.objectID) this.logout()
   }
 
-  editProfile(id: number) {
-    this.$router.push(`/users/${id}/edit`)
+  editProfile() {
+    this.$router.push(`/users/${this.$route.params.id}/edit`)
   }
 
   logout(): void {

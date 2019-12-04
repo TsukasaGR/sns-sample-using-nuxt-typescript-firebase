@@ -3,6 +3,7 @@ import { collection } from '~/modules/firebase'
 import * as types from '~/types/domainTypes'
 import * as appTypes from '~/types/applicationTypes'
 import { sortComments } from '~/modules/domains/comments'
+import { setUserOfComments } from '~/modules/domains/comments'
 // prettier-ignore
 import { snapshotErrorHandle, existErrorHandle } from '~/modules/firebase/firestore/errorHandle'
 const commentsCollection = collection('comments')
@@ -14,7 +15,7 @@ export async function all(sortOrder: appTypes.SortOrder = 'asc'): Promise<types.
     query.forEach(doc => comments.push(doc.data() as types.Comment))
   })
 
-  return sortComments(comments, sortOrder)
+  return sortComments(await setUserOfComments(comments), sortOrder)
 }
 
 export async function comment(commentId: string): Promise<types.Comment> {
